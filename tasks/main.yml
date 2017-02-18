@@ -1,0 +1,107 @@
+---
+- name: Check for required role variables.
+  assert: { that: "{{ item }} is defined" }
+  with_items:
+    - bitbucket_sources_owner
+    - bitbucket_sources_group
+    - bitbucket_sources_key
+    - bitbucket_sources_repo_account
+    - bitbucket_sources_repo_name
+    - bitbucket_sources_dest
+    # optional
+    #- bitbucket_sources_executable
+
+- name: Check for valid role values
+  assert: 
+    that: "bitbucket_sources_type in [ 'git', 'hg' ]"
+
+- name: "Ensure user exists: {{ bitbucket_sources_owner }}"
+  become: yes
+  user:
+    name: "{{ bitbucket_sources_owner }}"
+
+- name: "Ensure group exists: {{ bitbucket_sources_group }}"
+  become: yes
+  user:
+    name: "{{ bitbucket_sources_group }}"
+
+- name: Ensure .ssh directory exists with appropriate permissions.
+  become: yes
+  become_user: "{{ bitbucket_sources_owner }}"
+  file:
+    path: "~{{ bitbucket_sources_owner }}/.ssh"
+    state: directory
+    owner: "{{ bitbucket_sources_owner }}"
+    mode: 0700
+    # recures = apply permissions to all files in .ssh recursively
+    recures: yes
+
+- name: Copy the bitbucket access key
+  become: yes
+  copy:
+    src: "{{ bitbucket_sources_key }}"
+    dest: "~{{ bitbucket_sources_owner }}/.ssh/{{ bitbucket_sources_key | basename }}"
+    owner: "{{ bitbucket_sources_owner }}"
+    mode: 0400
+  register: bitbucket_sources_key_copy
+
+- name: Ensure bitbucket.org is in known_hosts.
+  become: yes
+  known_hosts:
+    host: bitbucket.org
+    key: "{{ lookup( 'file', 'pubkeys/bitbucket.org' ) }}"
+    path: /etc/ssh/ssh_known_hosts
+
+- name: Make sure parent directory exists and is writeable.
+  # Default location is in /opt, so we should become root
+  become: yes
+  file:
+    path: "{{ bitbucket_sources_dest | dirname }}"
+    state: directory
+    owner: "{{ bitbucket_sources_owner }}"
+    group: "{{ bitbucket_sources_group }}"
+    mode: "{{ bitbucket_sources_mode }}"
+
+- name: Clone or update bitbucket git repo.
+  become: yes
+  become_user: "{{ bitbucket_sources_owner }}"
+  when: bitbucket_sources_repo_type == "git"
+  git:
+    version: "{{ bitbucket_sources_version | default(omit) }}"
+    dest: "{{ bitbucket_sources_dest }}"
+    repo: >
+      "{{ ssh://git@%s/%s/%s%s | format(
+      bitbucket_sources_altssh | ternary('altssh.bitbucket.org:443','bitbucket.org'),
+      bitbucket_sources_repo_account,
+      bitbucket_sources_name,
+      bitbucket_sources_altssh | ternary('/', '.git')
+      ) }}"
+    key_file: "{{ bitbucket_sources_key_copy.dest }}"
+    executable: "{{ bitbucket_sources_executable | default(omit) }}"
+    # No mode option is available. Maybe add umask
+    #umask: "0027"
+  register: bitbucket_sources_return
+
+- name: Clone or update bitbucket hg repo.
+  become: yes
+  become_user: "{{ bitbucket_sources_owner }}"
+  when: bitbucket_sources_repo_type == "hg"
+  hg:
+    version: "{{ bitbucket_sources_version | default(omit) }}"
+    repo: >
+      "{{ ssh://hg@%s/%s/%s/ | format(
+      bitbucket_sources_altssh | ternary('altssh.bitbucket.org:443','bitbucket.org'),
+      bitbucket_sources_repo_account,
+      bitbucket_sources_name
+      ) }}"
+    dest: "{{ bitbucket_sources_dest }}"
+    executable: "{{ bitbucket_sources_executable | default(omit) }}"
+    #key_file: "{{ bitbucket_sources_key_copy.dest }}"
+    #
+    # it looks like duplicating the key_file feature of git
+    # would require creating an hg wrapper that does one of:
+    #  hg -e "ssh -i <keyfile>" $@
+    #  hg --ssh "ssh -i <keyfile>" $@
+    # And then pass that into executable
+  register: bitbucket_sources_return
+    
