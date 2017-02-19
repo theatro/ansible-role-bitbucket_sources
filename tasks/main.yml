@@ -13,7 +13,7 @@
 
 - name: Check for valid role values
   assert: 
-    that: "bitbucket_sources_type in [ 'git', 'hg' ]"
+    that: "bitbucket_sources_repo_type in [ 'git', 'hg' ]"
 
 - name: "Ensure user exists: {{ bitbucket_sources_owner }}"
   become: yes
