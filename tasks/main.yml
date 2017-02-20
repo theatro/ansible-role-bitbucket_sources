@@ -73,7 +73,7 @@
       "{{ 'ssh://git@%s/%s/%s%s' | format(
       bitbucket_sources_altssh | ternary('altssh.bitbucket.org:443','bitbucket.org'),
       bitbucket_sources_repo_account,
-      bitbucket_sources_name,
+      bitbucket_sources_repo_name,
       bitbucket_sources_altssh | ternary('/', '.git')
       ) }}"
     key_file: "{{ bitbucket_sources_key_copy.dest }}"
@@ -92,7 +92,7 @@
       "{{ 'ssh://hg@%s/%s/%s/' | format(
       bitbucket_sources_altssh | ternary('altssh.bitbucket.org:443','bitbucket.org'),
       bitbucket_sources_repo_account,
-      bitbucket_sources_name
+      bitbucket_sources_repo_name
       ) }}"
     dest: "{{ bitbucket_sources_dest }}"
     executable: "{{ bitbucket_sources_executable | default(omit) }}"
