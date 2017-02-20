@@ -42,7 +42,8 @@
     src: "{{ bitbucket_sources_key }}"
     dest: "~{{ bitbucket_sources_owner }}/.ssh/{{ bitbucket_sources_key | basename }}"
     owner: "{{ bitbucket_sources_owner }}"
-    mode: 0400
+    # Same mode as .ssh folder for idempotence
+    mode: 0700
   register: bitbucket_sources_key_copy
 
 - name: Ensure bitbucket.org is in known_hosts.
