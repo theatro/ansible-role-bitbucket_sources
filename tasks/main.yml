@@ -70,7 +70,7 @@
     version: "{{ bitbucket_sources_version | default(omit) }}"
     dest: "{{ bitbucket_sources_dest }}"
     repo: >
-      "{{ ssh://git@%s/%s/%s%s | format(
+      "{{ 'ssh://git@%s/%s/%s%s' | format(
       bitbucket_sources_altssh | ternary('altssh.bitbucket.org:443','bitbucket.org'),
       bitbucket_sources_repo_account,
       bitbucket_sources_name,
@@ -89,7 +89,7 @@
   hg:
     version: "{{ bitbucket_sources_version | default(omit) }}"
     repo: >
-      "{{ ssh://hg@%s/%s/%s/ | format(
+      "{{ 'ssh://hg@%s/%s/%s/' | format(
       bitbucket_sources_altssh | ternary('altssh.bitbucket.org:443','bitbucket.org'),
       bitbucket_sources_repo_account,
       bitbucket_sources_name
