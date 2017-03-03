@@ -33,8 +33,6 @@
     state: directory
     owner: "{{ bitbucket_sources_owner }}"
     mode: 0700
-    # recurse = apply permissions to all files in .ssh recursively
-    recurse: yes
 
 - name: Copy the bitbucket access key
   become: yes
