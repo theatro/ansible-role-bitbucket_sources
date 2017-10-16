@@ -75,7 +75,7 @@
       bitbucket_sources_repo_name,
       bitbucket_sources_altssh | ternary('/', '.git')
       ) }}
-    key_file: "{{ bitbucket_sources_key_copy.dest }}"
+    key_file: "~{{ bitbucket_sources_owner }}/.ssh/{{ bitbucket_sources_key | basename }}"
     executable: "{{ bitbucket_sources_executable | default(omit) }}"
     # No mode option is available. Maybe add umask
     #umask: "0027"
