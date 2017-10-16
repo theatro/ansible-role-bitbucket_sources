@@ -10,6 +10,7 @@ bitbucket_sources_owner: "{{ ansible_user }}"
 bitbucket_sources_group: "{{ ansible_user }}"
 bitbucket_sources_mode: 0755
 
-# Where to clone the gadget-pppd-units repository (change this to get rid of .git):
+# Where to clone the repository:
 #bitbucket_sources_dest: "~{{ bitbucket_sources_owner }}/{{ bitbucket_sources_repo_account }}/{{ bitbucket_sources_repo_name }}.git"
 #bitbucket_sources_key: "~/.ssh/<key_name_here>"
+bitbucket_sources_key_dest: "~{{ bitbucket_sources_owner }}/.ssh/{{ bitbucket_sources_key | basename }}"

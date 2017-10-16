@@ -46,6 +46,7 @@ bitbucket_sources_owner: "{{ ansible_user }}"
 bitbucket_sources_group: "{{ ansible_user }}"
 bitbucket_sources_mode: 0755
 bitbucket_sources_altssh: no
+bitbucket_sources_key_dest: "~{{ bitbucket_sources_owner }}/.ssh/{{ bitbucket_sources_key | basename }}"
 ```
 
 ** vars/main.yml **:

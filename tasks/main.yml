@@ -38,11 +38,10 @@
   become: yes
   copy:
     src: "{{ bitbucket_sources_key }}"
-    dest: "~{{ bitbucket_sources_owner }}/.ssh/{{ bitbucket_sources_key | basename }}"
+    dest: "{{ bitbucket_sources_key_dest }}"
     owner: "{{ bitbucket_sources_owner }}"
     # Same mode as .ssh folder for idempotence
     mode: 0700
-  register: bitbucket_sources_key_copy
 
 - name: Ensure bitbucket.org is in known_hosts.
   become: yes
@@ -75,7 +74,7 @@
       bitbucket_sources_repo_name,
       bitbucket_sources_altssh | ternary('/', '.git')
       ) }}
-    key_file: "~{{ bitbucket_sources_owner }}/.ssh/{{ bitbucket_sources_key | basename }}"
+    key_file: "{{ bitbucket_sources_key_dest }}"
     executable: "{{ bitbucket_sources_executable | default(omit) }}"
     # No mode option is available. Maybe add umask
     #umask: "0027"
@@ -95,7 +94,7 @@
       ) }}
     dest: "{{ bitbucket_sources_dest }}"
     executable: "{{ bitbucket_sources_executable | default(omit) }}"
-    #key_file: "{{ bitbucket_sources_key_copy.dest }}"
+    #key_file: "{{ bitbucket_sources_key_dest }}"
     #
     # it looks like duplicating the key_file feature of git
     # would require creating an hg wrapper that does one of:
