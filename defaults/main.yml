@@ -14,3 +14,4 @@ bitbucket_sources_mode: 0755
 #bitbucket_sources_dest: "~{{ bitbucket_sources_owner }}/{{ bitbucket_sources_repo_account }}/{{ bitbucket_sources_repo_name }}.git"
 #bitbucket_sources_key: "~/.ssh/<key_name_here>"
 bitbucket_sources_key_dest: "~{{ bitbucket_sources_owner }}/.ssh/{{ bitbucket_sources_key | basename }}"
+bitbucket_sources_key_copy: yes

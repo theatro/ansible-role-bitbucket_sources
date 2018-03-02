@@ -35,9 +35,11 @@ You can set the `bitbucket_sources_altssh` boolean to "`yes`" to use the [altssh
 
 The repository will be cloned as `bitbucket_sourcces_dest` owned by `bitbucket_sources_owner:bitbucket_sources_group` (conveniently referenced as `<dest>`, `<owner>`, and `<group>`). The parent directory of `<dest>` must be a directory owned by `<owner>:<group>` and will be created if it doesn't exist. The directory will have the permissions mode defined in `bitbucket_sources_mode`.
 
-The clone will be created by `bitbucket_sources_owner` with group `gadget_pppd_clone_group`, and will have the permissions of that user/group.
+The clone will be created by `bitbucket_sources_owner` with group `bitbucket_sources_group`, and will have the permissions of that user/group.
 
-Bitbucket requires some kind of credentials to access a repository, so you'll need to provide a [bitbucket access key][3] in `bitbucket_sources_key`.
+Bitbucket requires some kind of credentials to access a repository, so you'll need to provide a [bitbucket access key][3] in `bitbucket_sources_key`. If the key should not be copied from controller to ansible_host (e.g. the key was generated on the target ansible_host, or you deployed the key in another role/play, etc), then set `bitbucket_sources_key_copy` to `false` or `no`.
+
+** TODO: ** Add the option in this role of pushing the public key to bitbucket. This should grab the key, depending on the value of `bitbucket_sources_key_copy`, from the ansible_host (when `true`) or the ansible_controller (when `false`). This may require an additional variable for the suffix, but it'll probably just be `{{ bitbucket_sources_key }}.pub`. Relevant APIs are [deploy-keys][4] (for read-only access to one or more repos) [ssh-keys][5] (for full access for a particular user). Some kind of login credentials will be required.
 
 ** defaults/main.yml **:
 ```yaml
@@ -47,6 +49,7 @@ bitbucket_sources_group: "{{ ansible_user }}"
 bitbucket_sources_mode: 0755
 bitbucket_sources_altssh: no
 bitbucket_sources_key_dest: "~{{ bitbucket_sources_owner }}/.ssh/{{ bitbucket_sources_key | basename }}"
+bitbucket_sources_key_copy: yes
 ```
 
 ** vars/main.yml **:
@@ -123,3 +126,5 @@ Created by [Jacob Floyd](https://github.com/cognifloyd), employed by [Theatro](t
 [1]: https://confluence.atlassian.com/bitbucket/use-the-ssh-protocol-with-bitbucket-cloud-221449711.html#UsetheSSHprotocolwithBitbucketCloud-RepositoryURLformatsbyconnectionprotocol
 [2]: https://confluence.atlassian.com/bitbucket/use-the-ssh-protocol-with-bitbucket-cloud-221449711.html#UsetheSSHprotocolwithBitbucketCloud-SSHonPort443
 [3]: https://confluence.atlassian.com/bitbucket/use-access-keys-294486051.html
+[4]: https://confluence.atlassian.com/bitbucket/ssh-keys-resource-296911735.html
+[5]: https://confluence.atlassian.com/bitbucket/ssh-keys-resource-296911735.html
