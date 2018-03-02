@@ -19,11 +19,13 @@
   become: yes
   user:
     name: "{{ bitbucket_sources_owner }}"
+  tags: bitbucket_prep
 
 - name: "Ensure group exists: {{ bitbucket_sources_group }}"
   become: yes
   user:
     name: "{{ bitbucket_sources_group }}"
+  tags: bitbucket_prep
 
 - name: Ensure .ssh directory exists with appropriate permissions.
   become: yes
@@ -33,6 +35,7 @@
     state: directory
     owner: "{{ bitbucket_sources_owner }}"
     mode: 0700
+  tags: bitbucket_prep
 
 - name: Copy the bitbucket access key
   become: yes
@@ -42,6 +45,7 @@
     owner: "{{ bitbucket_sources_owner }}"
     # Same mode as .ssh folder for idempotence
     mode: 0700
+  tags: bitbucket_prep
 
 - name: Ensure bitbucket.org is in known_hosts.
   become: yes
@@ -49,6 +53,7 @@
     host: bitbucket.org
     key: "{{ lookup( 'file', 'pubkeys/bitbucket.org' ) }}"
     path: /etc/ssh/ssh_known_hosts
+  tags: bitbucket_prep
 
 - name: Make sure parent directory exists and is writeable.
   # Default location is in /opt, so we should become root
@@ -59,6 +64,7 @@
     owner: "{{ bitbucket_sources_owner }}"
     group: "{{ bitbucket_sources_group }}"
     mode: "{{ bitbucket_sources_mode }}"
+  tags: bitbucket_prep
 
 - name: Clone or update bitbucket git repo.
   become: yes
@@ -79,6 +85,7 @@
     # No mode option is available. Maybe add umask
     #umask: "0027"
   register: bitbucket_sources_return
+  tags: bitbucket_clone
 
 - name: Clone or update bitbucket hg repo.
   become: yes
@@ -102,4 +109,5 @@
     #  hg --ssh "ssh -i <keyfile>" $@
     # And then pass that into executable
   register: bitbucket_sources_return
-    
+  tags: bitbucket_clone
+
