@@ -83,6 +83,7 @@
     executable: "{{ bitbucket_sources_executable | default(omit) }}"
     # No mode option is available. Maybe add umask
     #umask: "0027"
+    force: "{{ bitbucket_sources_force }}"
   register: bitbucket_sources_return
   tags: bitbucket_clone
 
@@ -92,13 +93,13 @@
   when: bitbucket_sources_repo_type == "hg"
   hg:
     version: "{{ bitbucket_sources_version | default(omit) }}"
+    dest: "{{ bitbucket_sources_dest }}"
     repo: >-
       {{ "ssh://hg@%s/%s/%s/" | format(
       bitbucket_sources_altssh | ternary('altssh.bitbucket.org:443','bitbucket.org'),
       bitbucket_sources_repo_account,
       bitbucket_sources_repo_name
       ) }}
-    dest: "{{ bitbucket_sources_dest }}"
     executable: "{{ bitbucket_sources_executable | default(omit) }}"
     #key_file: "{{ bitbucket_sources_key_dest }}"
     #
@@ -107,6 +108,7 @@
     #  hg -e "ssh -i <keyfile>" $@
     #  hg --ssh "ssh -i <keyfile>" $@
     # And then pass that into executable
+    force: "{{ bitbucket_sources_force }}"
   register: bitbucket_sources_return
   tags: bitbucket_clone
 

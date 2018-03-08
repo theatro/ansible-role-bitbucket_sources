@@ -50,6 +50,7 @@ bitbucket_sources_mode: 0755
 bitbucket_sources_altssh: no
 bitbucket_sources_key_dest: "~{{ bitbucket_sources_owner }}/.ssh/{{ bitbucket_sources_key | basename }}"
 bitbucket_sources_key_copy: yes
+bitbucket_sources_force: no
 ```
 
 ** vars/main.yml **:
@@ -71,6 +72,7 @@ You may also override any of the defaults (see above). Other optional variables 
 ```yaml
 bitbucket_sources_version: a83b8a42
 bitbucket_sources_executable: "/home/acme/gentoo-prefix/usr/bin/git"
+bitbucket_sources_force: yes
 ```
 
 ** TODO: ** I don't know how to make hg use the indicated key.
@@ -98,7 +100,7 @@ No external dependencies.
 ```yaml
 - hosts: vagrant
   tasks:
-    - name: Clone or update example-magnificent from bitbucket.
+    - name: Clone or force update example-magnificent from bitbucket.
       include_role:
         name: cognifloyd.bitbucket-sources
         allow_duplicates: yes
@@ -111,6 +113,7 @@ No external dependencies.
         bitbucket_sources_owner: vagrant
         bitbucket_sources_group: vagrant
         bitbucket_sources_key: "~/.ssh/example_access_key"
+        bitbucket_sources_force: yes
 ```
 
 ## License
