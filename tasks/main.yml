@@ -1,5 +1,5 @@
 ---
-- name: Check for required role variables and values.
+- name: Check for required role variables and values
   assert:
     that:
       - bitbucket_sources_owner is defined
@@ -25,7 +25,7 @@
     name: "{{ bitbucket_sources_group }}"
   tags: bitbucket_prep
 
-- name: Ensure .ssh directory exists with appropriate permissions.
+- name: Ensure .ssh directory exists with appropriate permissions
   become: yes
   become_user: "{{ bitbucket_sources_owner }}"
   file:
@@ -46,7 +46,7 @@
   when: bitbucket_sources_key_copy
   tags: bitbucket_prep
 
-- name: Ensure bitbucket.org is in known_hosts.
+- name: Ensure bitbucket.org is in known_hosts
   become: yes
   known_hosts:
     host: bitbucket.org
@@ -54,7 +54,7 @@
     path: /etc/ssh/ssh_known_hosts
   tags: bitbucket_prep
 
-- name: Make sure parent directory exists and is writeable.
+- name: Make sure parent directory exists and is writeable
   # Default location is in /opt, so we should become root
   become: yes
   file:
@@ -65,7 +65,7 @@
     mode: "{{ bitbucket_sources_mode }}"
   tags: bitbucket_prep
 
-- name: Clone or update bitbucket git repo.
+- name: "Clone or update {{ bitbucket_sources_repo_account }}/{{ bitbucket_sources_repo_name }}.git repo from bitbucket"
   become: yes
   become_user: "{{ bitbucket_sources_owner }}"
   when: bitbucket_sources_repo_type == "git"
@@ -86,7 +86,7 @@
   register: bitbucket_sources_return
   tags: bitbucket_clone
 
-- name: Clone or update bitbucket hg repo.
+- name: "Clone or update {{ bitbucket_sources_repo_account }}/{{ bitbucket_sources_repo_name }}.hg repo from bitbucket"
   become: yes
   become_user: "{{ bitbucket_sources_owner }}"
   when: bitbucket_sources_repo_type == "hg"
