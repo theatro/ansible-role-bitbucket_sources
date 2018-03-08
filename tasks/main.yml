@@ -1,19 +1,17 @@
 ---
-- name: Check for required role variables.
-  assert: { that: "{{ item }} is defined" }
-  with_items:
-    - bitbucket_sources_owner
-    - bitbucket_sources_group
-    - bitbucket_sources_key
-    - bitbucket_sources_repo_account
-    - bitbucket_sources_repo_name
-    - bitbucket_sources_dest
-    # optional
-    #- bitbucket_sources_executable
+- name: Check for required role variables and values.
+  assert:
+    that:
+      - bitbucket_sources_owner is defined
+      - bitbucket_sources_group is defined
+      - bitbucket_sources_key is defined
+      - bitbucket_sources_repo_account is defined
+      - bitbucket_sources_repo_name is defined
+      - bitbucket_sources_dest is defined
+      # optional
+      #- bitbucket_sources_executable is defined
 
-- name: Check for valid role values
-  assert: 
-    that: "bitbucket_sources_repo_type in [ 'git', 'hg' ]"
+      - "bitbucket_sources_repo_type in [ 'git', 'hg' ]"
 
 - name: "Ensure user exists: {{ bitbucket_sources_owner }}"
   become: yes
