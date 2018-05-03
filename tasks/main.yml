@@ -112,3 +112,13 @@
   register: bitbucket_sources_return
   tags: bitbucket_clone
 
+- name: Add any user-specified vars to git checkout's config.
+  become: yes
+  become_user: "{{ bitbucket_sources_owner }}"
+  when: bitbucket_sources_repo_type == "git"
+  git_config:
+    repo: "{{ bitbucket_sources_dest }}"
+    scope: "{{ item.scope|default('local') }}"
+    name: "{{ item.name }}"
+    value: "{{ item.value }}"
+  with_list: bitbucket_sources_git_config

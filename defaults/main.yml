@@ -18,3 +18,8 @@ bitbucket_sources_key_copy: yes
 
 # Discard uncommitted changes or modified files.
 bitbucket_sources_force: no
+
+# A list of config vars to set, typically on the local scope of the repo.
+bitbucket_sources_git_config: []
+# - { name: pull.rebase, value: true }
+# - { name: rebase.autoStash, value: true, scope: system }
