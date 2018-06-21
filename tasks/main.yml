@@ -69,6 +69,7 @@
   become: yes
   become_user: "{{ bitbucket_sources_owner }}"
   when: bitbucket_sources_repo_type == "git"
+  diff: "{{ bitbucket_sources_allow_checkout_diff }}"
   git:
     version: "{{ bitbucket_sources_version | default(omit) }}"
     dest: "{{ bitbucket_sources_dest }}"
@@ -91,6 +92,7 @@
   become: yes
   become_user: "{{ bitbucket_sources_owner }}"
   when: bitbucket_sources_repo_type == "hg"
+  diff: "{{ bitbucket_sources_allow_checkout_diff }}"
   hg:
     version: "{{ bitbucket_sources_version | default(omit) }}"
     dest: "{{ bitbucket_sources_dest }}"

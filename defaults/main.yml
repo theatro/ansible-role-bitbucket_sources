@@ -23,3 +23,5 @@ bitbucket_sources_force: no
 bitbucket_sources_git_config: []
 # - { name: pull.rebase, value: true }
 # - { name: rebase.autoStash, value: true, scope: system }
+
+bitbucket_sources_allow_checkout_diff: no
