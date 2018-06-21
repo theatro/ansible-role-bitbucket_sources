@@ -42,6 +42,7 @@
     dest: "{{ bitbucket_sources_key_dest }}"
     owner: "{{ bitbucket_sources_owner }}"
     mode: 0600
+  no_log: yes
   when: bitbucket_sources_key_copy
   tags: bitbucket_prep
 
