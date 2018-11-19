@@ -10,9 +10,12 @@
     bitbucket_sources_force: true
 
   pre_tasks:
-    - name: Install ssh (a pre-requisite of the bitbucket_sources role)
+    - name: Install pre-requisite packages of the bitbucket_sources role
       package:
-        name: "openssh-client{% if ansible_facts.os_family == 'RedHat' %}s{% endif %}"
+        name:
+          - "openssh-client{% if ansible_facts.os_family == 'RedHat' %}s{% endif %}"
+          - git
+          - mercurial
         state: present
 
   tasks:
