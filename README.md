@@ -34,6 +34,12 @@ You can set the `bitbucket_sources_altssh` boolean to "`yes`" to use the [altssh
  - `ssh://git@altssh.bitbucket.org:443/<account>/<name>/`
  - `ssh://hg@altssh.bitbucket.org:443/<account>/<name>/`
 
+If you do not want to use ssh, you can set `bitbucket_sources_protocol` to `https` (default is `ssh`).
+When using https, these are the urls:
+
+ - `https://bitbucket.org/<account>/<name>.git` (for git)
+ - `https://bitbucket.org/<account>/<name>/` (for hg)
+
 ### The Clone Destination
 
 The repository will be cloned as `bitbucket_sourcces_dest` owned by `bitbucket_sources_owner:bitbucket_sources_group` (conveniently referenced as `<dest>`, `<owner>`, and `<group>`). The parent directory of `<dest>` must be a directory owned by `<owner>:<group>` and will be created if it doesn't exist. The directory will have the permissions mode defined in `bitbucket_sources_mode`.
