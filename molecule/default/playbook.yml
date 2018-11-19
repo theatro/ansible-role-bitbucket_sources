@@ -1,5 +1,33 @@
 ---
 - name: Converge
   hosts: all
-  roles:
-    - role: bitbucket-sources
+  vars:
+    base_dest: /var/scm/bitbucket
+
+    bitbucket_sources_owner: bitbucket-test-user
+    bitbucket_sources_group: bitbucket-test-group
+    bitbucket_sources_key: examples_bitbucket_ro_access_key
+    bitbucket_sources_force: yes
+
+  tasks:
+    - name: Test bitbucket-sources with git
+      include_role:
+        name: bitbucket-sources
+        allow_duplicates: yes
+        public: no
+      vars:
+        bitbucket_sources_repo_account: theatro-noc
+        bitbucket_sources_repo_name: example-git
+        bitbucket_sources_repo_type: git
+        bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-git.git"
+
+    - name: Test bitbucket-sources with mercurial
+      include_role:
+        name: bitbucket-sources
+        allow_duplicates: yes
+        public: no
+      vars:
+        bitbucket_sources_repo_account: theatro-noc
+        kitbucket_sources_repo_name: example-hg
+        bitbucket_sources_repo_type: hg
+        bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-hg.hg"

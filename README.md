@@ -107,7 +107,7 @@ No external dependencies.
       include_role:
         name: theatro.bitbucket-sources
         allow_duplicates: yes
-        private: yes
+        public: no
       vars:
         bitbucket_sources_repo_type: git
         bitbucket_sources_repo_account: example
