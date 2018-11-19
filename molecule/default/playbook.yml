@@ -58,28 +58,28 @@
         bitbucket_sources_repo_type: hg
         bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-hg-public-https"
 
-    # Not supported until a way to add ssh keys is available
-    # - name: public mercurial over ssh test
-    #   include_role:
-    #     name: bitbucket_sources
-    #     allow_duplicates: true
-    #     public: false
-    #   vars:
-    #     # ssh by default
-    #     bitbucket_sources_repo_account: theatro-noc
-    #     bitbucket_sources_repo_name: example-hg-public
-    #     bitbucket_sources_repo_type: hg
-    #     bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-hg-public-ssh"
-
-    # Not supported until a way to add ssh keys is available
-    # - name: private mercurial over ssh test
-    #   include_role:
-    #     name: bitbucket_sources
-    #     allow_duplicates: true
-    #     public: false
-    #   vars:
-    #     # ssh by default
-    #     bitbucket_sources_repo_account: theatro-noc
-    #     bitbucket_sources_repo_name: example-hg-private
-    #     bitbucket_sources_repo_type: hg
-    #     bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-hg-private-ssh"
+#     Not supported until a way to add ssh keys is available
+#     - name: public mercurial over ssh test
+#       include_role:
+#         name: bitbucket_sources
+#         allow_duplicates: true
+#         public: false
+#       vars:
+#         # ssh by default
+#         bitbucket_sources_repo_account: theatro-noc
+#         bitbucket_sources_repo_name: example-hg-public
+#         bitbucket_sources_repo_type: hg
+#         bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-hg-public-ssh"
+#
+#     Not supported until a way to add ssh keys is available
+#     - name: private mercurial over ssh test
+#       include_role:
+#         name: bitbucket_sources
+#         allow_duplicates: true
+#         public: false
+#       vars:
+#         # ssh by default
+#         bitbucket_sources_repo_account: theatro-noc
+#         bitbucket_sources_repo_name: example-hg-private
+#         bitbucket_sources_repo_type: hg
+#         bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-hg-private-ssh"

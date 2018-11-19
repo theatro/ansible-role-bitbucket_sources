@@ -4,7 +4,7 @@
 
 bitbucket_sources_repo_type: git
 bitbucket_sources_altssh: false
-bitbucket_sources_protocol: ssh # https or ssh
+bitbucket_sources_protocol: ssh  # https or ssh
 
 # Create directories with this user/group if needed.
 bitbucket_sources_owner: "{{ ansible_user }}"
