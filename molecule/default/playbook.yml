@@ -10,46 +10,76 @@
     bitbucket_sources_force: true
 
   tasks:
-    - name: public git test
+    - name: public git over https test
       include_role:
         name: bitbucket_sources
         allow_duplicates: true
         public: false
       vars:
+        bitbucket_sources_protocol: https
         bitbucket_sources_repo_account: theatro-noc
         bitbucket_sources_repo_name: example-git-public
         bitbucket_sources_repo_type: git
-        bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-git-public.git"
+        bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-git-public-https"
 
-    - name: private git test
+    - name: public git over ssh test
       include_role:
         name: bitbucket_sources
         allow_duplicates: true
         public: false
       vars:
+        # ssh by default
+        bitbucket_sources_repo_account: theatro-noc
+        bitbucket_sources_repo_name: example-git-public
+        bitbucket_sources_repo_type: git
+        bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-git-public-ssh"
+
+    - name: private git over ssh test
+      include_role:
+        name: bitbucket_sources
+        allow_duplicates: true
+        public: false
+      vars:
+        # ssh by default
         bitbucket_sources_repo_account: theatro-noc
         bitbucket_sources_repo_name: example-git-private
         bitbucket_sources_repo_type: git
-        bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-git-private.git"
+        bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-git-private-ssh"
 
-    - name: public mercurial test
+    - name: public mercurial over https test
       include_role:
         name: bitbucket_sources
         allow_duplicates: true
         public: false
       vars:
+        bitbucket_sources_protocol: https
         bitbucket_sources_repo_account: theatro-noc
         bitbucket_sources_repo_name: example-hg-public
         bitbucket_sources_repo_type: hg
-        bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-hg-public.hg"
+        bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-hg-public-https"
 
-    - name: private mercurial test
-      include_role:
-        name: bitbucket_sources
-        allow_duplicates: true
-        public: false
-      vars:
-        bitbucket_sources_repo_account: theatro-noc
-        bitbucket_sources_repo_name: example-hg-private
-        bitbucket_sources_repo_type: hg
-        bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-hg-private.hg"
+    # Not supported until a way to add ssh keys is available
+    # - name: public mercurial over ssh test
+    #   include_role:
+    #     name: bitbucket_sources
+    #     allow_duplicates: true
+    #     public: false
+    #   vars:
+    #     # ssh by default
+    #     bitbucket_sources_repo_account: theatro-noc
+    #     bitbucket_sources_repo_name: example-hg-public
+    #     bitbucket_sources_repo_type: hg
+    #     bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-hg-public-ssh"
+
+    # Not supported until a way to add ssh keys is available
+    # - name: private mercurial over ssh test
+    #   include_role:
+    #     name: bitbucket_sources
+    #     allow_duplicates: true
+    #     public: false
+    #   vars:
+    #     # ssh by default
+    #     bitbucket_sources_repo_account: theatro-noc
+    #     bitbucket_sources_repo_name: example-hg-private
+    #     bitbucket_sources_repo_type: hg
+    #     bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-hg-private-ssh"

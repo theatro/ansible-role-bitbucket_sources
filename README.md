@@ -6,7 +6,14 @@ This role clones/pulls a bitbucket cloud repository using an access key. The clo
 
 This role can be used more than once when using `include_role`/`import_role`. Other methods are untested.
 
-For now, only git has been tested, but, theoretically hg should work as well. 
+Tested scenarios in CI:
+ - git public repo over anonymous https
+ - git public repo over ssh using key
+ - git private repo over ssh using key
+ - hg public repo over anonymous https
+
+TODO: hg private repo support needs a way to seet the ssh key.
+TODO: hg public repo over ssh support needs to be tested (key must be in ssh config)
 
 NOTE: This was moved from cognifloyd/ansible-role-bitbucket_sources.
 
@@ -35,7 +42,7 @@ You can set the `bitbucket_sources_altssh` boolean to "`yes`" to use the [altssh
  - `ssh://hg@altssh.bitbucket.org:443/<account>/<name>/`
 
 If you do not want to use ssh, you can set `bitbucket_sources_protocol` to `https` (default is `ssh`).
-When using https, these are the urls:
+This role only supports anonymous https. When using https, these are the urls:
 
  - `https://bitbucket.org/<account>/<name>.git`
  - `https://bitbucket.org/<account>/<name>`
