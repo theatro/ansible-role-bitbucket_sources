@@ -1,9 +1,9 @@
 ---
 # Change this if you have to clone it with different credentials, or to clone a fork.
-#bitbucket_sources_repo: "ssh://git@bitbucket.org/<account>/<repo>.git"
+# bitbucket_sources_repo: "ssh://git@bitbucket.org/<account>/<repo>.git"
 
 bitbucket_sources_repo_type: git
-bitbucket_sources_altssh: no
+bitbucket_sources_altssh: false
 
 # Create directories with this user/group if needed.
 bitbucket_sources_owner: "{{ ansible_user }}"
@@ -11,17 +11,17 @@ bitbucket_sources_group: "{{ ansible_user }}"
 bitbucket_sources_mode: 0755
 
 # Where to clone the repository:
-#bitbucket_sources_dest: "~{{ bitbucket_sources_owner }}/{{ bitbucket_sources_repo_account }}/{{ bitbucket_sources_repo_name }}.git"
-#bitbucket_sources_key: "~/.ssh/<key_name_here>"
+# bitbucket_sources_dest: "~{{ bitbucket_sources_owner }}/{{ bitbucket_sources_repo_account }}/{{ bitbucket_sources_repo_name }}.git"
+# bitbucket_sources_key: "~/.ssh/<key_name_here>"
 bitbucket_sources_key_dest: "~{{ bitbucket_sources_owner }}/.ssh/{{ bitbucket_sources_key | basename }}"
-bitbucket_sources_key_copy: yes
+bitbucket_sources_key_copy: true
 
 # Discard uncommitted changes or modified files.
-bitbucket_sources_force: no
+bitbucket_sources_force: false
 
 # A list of config vars to set, typically on the local scope of the repo.
 bitbucket_sources_git_config: []
 # - { name: pull.rebase, value: true }
 # - { name: rebase.autoStash, value: true, scope: system }
 
-bitbucket_sources_allow_checkout_diff: no
+bitbucket_sources_allow_checkout_diff: false

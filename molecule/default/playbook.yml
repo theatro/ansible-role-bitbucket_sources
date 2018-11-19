@@ -7,14 +7,14 @@
     bitbucket_sources_owner: bitbucket-test-user
     bitbucket_sources_group: bitbucket-test-group
     bitbucket_sources_key: examples_bitbucket_ro_access_key
-    bitbucket_sources_force: yes
+    bitbucket_sources_force: true
 
   tasks:
     - name: Test bitbucket-sources with git
       include_role:
         name: bitbucket-sources
-        allow_duplicates: yes
-        public: no
+        allow_duplicates: true
+        public: false
       vars:
         bitbucket_sources_repo_account: theatro-noc
         bitbucket_sources_repo_name: example-git
@@ -24,8 +24,8 @@
     - name: Test bitbucket-sources with mercurial
       include_role:
         name: bitbucket-sources
-        allow_duplicates: yes
-        public: no
+        allow_duplicates: true
+        public: false
       vars:
         bitbucket_sources_repo_account: theatro-noc
         kitbucket_sources_repo_name: example-hg

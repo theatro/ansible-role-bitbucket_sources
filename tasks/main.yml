@@ -9,24 +9,24 @@
       - bitbucket_sources_repo_name is defined
       - bitbucket_sources_dest is defined
       # optional
-      #- bitbucket_sources_executable is defined
+      # - bitbucket_sources_executable is defined
 
       - "bitbucket_sources_repo_type in [ 'git', 'hg' ]"
 
 - name: "Ensure user exists: {{ bitbucket_sources_owner }}"
-  become: yes
+  become: true
   user:
     name: "{{ bitbucket_sources_owner }}"
   tags: bitbucket_prep
 
 - name: "Ensure group exists: {{ bitbucket_sources_group }}"
-  become: yes
+  become: true
   user:
     name: "{{ bitbucket_sources_group }}"
   tags: bitbucket_prep
 
 - name: Ensure .ssh directory exists with appropriate permissions
-  become: yes
+  become: true
   become_user: "{{ bitbucket_sources_owner }}"
   file:
     path: "~{{ bitbucket_sources_owner }}/.ssh"
@@ -36,18 +36,18 @@
   tags: bitbucket_prep
 
 - name: Copy the bitbucket access key
-  become: yes
+  become: true
   copy:
     src: "{{ bitbucket_sources_key }}"
     dest: "{{ bitbucket_sources_key_dest }}"
     owner: "{{ bitbucket_sources_owner }}"
     mode: 0600
-  no_log: yes
+  no_log: true
   when: bitbucket_sources_key_copy
   tags: bitbucket_prep
 
 - name: Ensure bitbucket.org is in known_hosts
-  become: yes
+  become: true
   known_hosts:
     host: bitbucket.org
     key: "{{ lookup( 'file', 'pubkeys/bitbucket.org' ) }}"
@@ -56,7 +56,7 @@
 
 - name: Make sure parent directory exists and is writeable
   # Default location is in /opt, so we should become root
-  become: yes
+  become: true
   file:
     path: "{{ bitbucket_sources_dest | dirname }}"
     state: directory
@@ -66,7 +66,7 @@
   tags: bitbucket_prep
 
 - name: "Clone or update {{ bitbucket_sources_repo_account }}/{{ bitbucket_sources_repo_name }}.git repo from bitbucket"
-  become: yes
+  become: true
   become_user: "{{ bitbucket_sources_owner }}"
   when: bitbucket_sources_repo_type == "git"
   diff: "{{ bitbucket_sources_allow_checkout_diff }}"
@@ -83,18 +83,18 @@
     key_file: "{{ bitbucket_sources_key_dest }}"
     executable: "{{ bitbucket_sources_executable | default(omit) }}"
     # No mode option is available. Maybe add umask
-    #umask: "0027"
+    # umask: "0027"
     force: "{{ bitbucket_sources_force }}"
   register: bitbucket_sources_return
   tags: bitbucket_clone
 
 - name: "Clone or update {{ bitbucket_sources_repo_account }}/{{ bitbucket_sources_repo_name }}.hg repo from bitbucket"
-  become: yes
+  become: true
   become_user: "{{ bitbucket_sources_owner }}"
   when: bitbucket_sources_repo_type == "hg"
   diff: "{{ bitbucket_sources_allow_checkout_diff }}"
   hg:
-    version: "{{ bitbucket_sources_version | default(omit) }}"
+    revision: "{{ bitbucket_sources_version | default(omit) }}"
     dest: "{{ bitbucket_sources_dest }}"
     repo: >-
       {{ "ssh://hg@%s/%s/%s/" | format(
@@ -103,7 +103,7 @@
       bitbucket_sources_repo_name
       ) }}
     executable: "{{ bitbucket_sources_executable | default(omit) }}"
-    #key_file: "{{ bitbucket_sources_key_dest }}"
+    # key_file: "{{ bitbucket_sources_key_dest }}"
     #
     # it looks like duplicating the key_file feature of git
     # would require creating an hg wrapper that does one of:
@@ -115,7 +115,7 @@
   tags: bitbucket_clone
 
 - name: Add any user-specified vars to git checkout's config.
-  become: yes
+  become: true
   become_user: "{{ bitbucket_sources_owner }}"
   when: bitbucket_sources_repo_type == "git"
   git_config:
