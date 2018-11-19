@@ -28,6 +28,6 @@
         public: false
       vars:
         bitbucket_sources_repo_account: theatro-noc
-        kitbucket_sources_repo_name: example-hg
+        bitbucket_sources_repo_name: example-hg
         bitbucket_sources_repo_type: hg
         bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-hg.hg"
