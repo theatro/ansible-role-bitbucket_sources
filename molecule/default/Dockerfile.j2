@@ -12,3 +12,10 @@ RUN if [ $(command -v apt-get) ]; then apt-get update && apt-get install -y pyth
     elif [ $(command -v zypper) ]; then zypper refresh && zypper install -y python sudo bash python-xml && zypper clean -a; \
     elif [ $(command -v apk) ]; then apk update && apk add --no-cache python sudo bash ca-certificates; \
     elif [ $(command -v xbps-install) ]; then xbps-install -Syu && xbps-install -y python sudo bash ca-certificates && xbps-remove -O; fi
+
+RUN if [ $(command -v apt-get) ]; then apt-get install -y openssh-client git mercurial && apt-get clean; \
+    elif [ $(command -v dnf) ]; then dnf --assumeyes install openssh-clients git mercurial && dnf clean all; \
+    elif [ $(command -v yum) ]; then yum install -y openssh-clients git mercurial && yum clean all; \
+    elif [ $(command -v zypper) ]; then zypper install -y openssh git mercurial && zypper clean -a; \
+    elif [ $(command -v apk) ]; then apk add --no-cache openssh-client git mercurial; \
+    elif [ $(command -v xbps-install) ]; then xbps-install -y openssh git mercurial && xbps-remove -O; fi

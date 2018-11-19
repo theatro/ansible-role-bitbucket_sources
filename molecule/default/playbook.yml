@@ -9,15 +9,6 @@
     bitbucket_sources_key: examples_bitbucket_ro_access_key
     bitbucket_sources_force: true
 
-  pre_tasks:
-    - name: Install pre-requisite packages of the bitbucket_sources role
-      package:
-        name:
-          - "openssh-client{% if ansible_facts.os_family == 'RedHat' %}s{% endif %}"
-          - git
-          - mercurial
-        state: present
-
   tasks:
     - name: Test bitbucket_sources with git
       include_role:
