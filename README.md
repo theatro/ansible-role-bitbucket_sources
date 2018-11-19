@@ -27,7 +27,7 @@ This role uses these three variables (which I will conveniently reference as `<t
 Based on whether `<type>` is git or hg, the url will be (see the [bitbucket docs][1]):
 
  - `ssh://git@bitbucket.org/<account>/<name>.git`
- - `ssh://hg@bitbucket.org/<account>/<name>/`
+ - `ssh://hg@bitbucket.org/<account>/<name>`
 
 You can set the `bitbucket_sources_altssh` boolean to "`yes`" to use the [altssh urls][2] instead:
 
@@ -37,8 +37,8 @@ You can set the `bitbucket_sources_altssh` boolean to "`yes`" to use the [altssh
 If you do not want to use ssh, you can set `bitbucket_sources_protocol` to `https` (default is `ssh`).
 When using https, these are the urls:
 
- - `https://bitbucket.org/<account>/<name>.git` (for git)
- - `https://bitbucket.org/<account>/<name>/` (for hg)
+ - `https://bitbucket.org/<account>/<name>.git`
+ - `https://bitbucket.org/<account>/<name>`
 
 ### The Clone Destination
 

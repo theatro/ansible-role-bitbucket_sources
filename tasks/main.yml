@@ -99,7 +99,7 @@
     revision: "{{ bitbucket_sources_version | default(omit) }}"
     dest: "{{ bitbucket_sources_dest }}"
     repo: >-
-      {{ "%s://%s%s/%s/%s/" | format(
+      {{ "%s://%s%s/%s/%s" | format(
       bitbucket_sources_protocol,
       (bitbucket_sources_protocol == 'ssh') | ternary('hg@', ''),
       bitbucket_sources_altssh | ternary('altssh.bitbucket.org:443','bitbucket.org'),
