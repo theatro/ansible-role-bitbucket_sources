@@ -10,24 +10,46 @@
     bitbucket_sources_force: true
 
   tasks:
-    - name: Test bitbucket_sources with git
+    - name: public git test
       include_role:
         name: bitbucket_sources
         allow_duplicates: true
         public: false
       vars:
         bitbucket_sources_repo_account: theatro-noc
-        bitbucket_sources_repo_name: example-git
+        bitbucket_sources_repo_name: example-git-public
         bitbucket_sources_repo_type: git
-        bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-git.git"
+        bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-git-public.git"
 
-    - name: Test bitbucket_sources with mercurial
+    - name: private git test
       include_role:
         name: bitbucket_sources
         allow_duplicates: true
         public: false
       vars:
         bitbucket_sources_repo_account: theatro-noc
-        bitbucket_sources_repo_name: example-hg
+        bitbucket_sources_repo_name: example-git-private
+        bitbucket_sources_repo_type: git
+        bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-git-private.git"
+
+    - name: public mercurial test
+      include_role:
+        name: bitbucket_sources
+        allow_duplicates: true
+        public: false
+      vars:
+        bitbucket_sources_repo_account: theatro-noc
+        bitbucket_sources_repo_name: example-hg-public
         bitbucket_sources_repo_type: hg
-        bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-hg.hg"
+        bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-hg-public.hg"
+
+    - name: private mercurial test
+      include_role:
+        name: bitbucket_sources
+        allow_duplicates: true
+        public: false
+      vars:
+        bitbucket_sources_repo_account: theatro-noc
+        bitbucket_sources_repo_name: example-hg-private
+        bitbucket_sources_repo_type: hg
+        bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-hg-private.hg"
