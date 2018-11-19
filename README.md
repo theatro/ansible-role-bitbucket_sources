@@ -1,12 +1,15 @@
 # Ansible Role: Bitbucket Sources
 
-[![Build Status](https://travis-ci.org/cognifloyd/ansible-role-bitbucket-sources.svg?branch=master)](https://travis-ci.org/cognifloyd/ansible-role-bitbucket-sources)
+[![Build Status](https://travis-ci.org/theatro/ansible-role-bitbucket-sources.svg?branch=master)](https://travis-ci.org/theatro/ansible-role-bitbucket-sources)
 
 This role clones/pulls a bitbucket cloud repository using an access key. The clone repository can be located anywhere owned by an indicated user. If the user or location does not exist, they will be created.
 
-This role can be used more than once when using `include_role`. Other methods are untested.
+This role can be used more than once when using `include_role`/`import_role`. Other methods are untested.
 
 For now, only git has been tested, but, theoretically hg should work as well. 
+
+NOTE: This was moved from cognifloyd/ansible-role-bitbucket-sources.
+
 ## Requirements
 
 This role assumes that the source control executable (git or hg) is already installed. If you need to specify a non-standard executable location, set the optional variable `bitbucket_sources_executable`.
@@ -102,7 +105,7 @@ No external dependencies.
   tasks:
     - name: Clone or force update example-magnificent from bitbucket.
       include_role:
-        name: cognifloyd.bitbucket-sources
+        name: theatro.bitbucket-sources
         allow_duplicates: yes
         private: yes
       vars:
