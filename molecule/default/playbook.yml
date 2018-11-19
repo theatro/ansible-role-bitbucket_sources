@@ -10,15 +10,15 @@
     bitbucket_sources_force: true
 
   pre_tasks:
-    - name: Install ssh (a pre-requisite of the bitbucket-sources role)
+    - name: Install ssh (a pre-requisite of the bitbucket_sources role)
       package:
         name: "openssh-client{% if ansible_facts.os_family == 'RedHat' %}s{% endif %}"
         state: present
 
   tasks:
-    - name: Test bitbucket-sources with git
+    - name: Test bitbucket_sources with git
       include_role:
-        name: bitbucket-sources
+        name: bitbucket_sources
         allow_duplicates: true
         public: false
       vars:
@@ -27,9 +27,9 @@
         bitbucket_sources_repo_type: git
         bitbucket_sources_dest: "{{ base_dest }}/theatro-noc/example-git.git"
 
-    - name: Test bitbucket-sources with mercurial
+    - name: Test bitbucket_sources with mercurial
       include_role:
-        name: bitbucket-sources
+        name: bitbucket_sources
         allow_duplicates: true
         public: false
       vars:

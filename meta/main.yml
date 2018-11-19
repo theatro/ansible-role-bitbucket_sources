@@ -1,5 +1,6 @@
 ---
 galaxy_info:
+  role_name: bitbucket_sources
   author: cognifloyd
   description: Clone/update a bitbucket cloud repository
   company: Theatro Labs, Inc.

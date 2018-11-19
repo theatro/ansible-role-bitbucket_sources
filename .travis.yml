@@ -9,7 +9,7 @@ before_install:
 install:
   - pip install molecule
   - pip install docker
-  - ln -s ansible-role-bitbucket-sources ../bitbucket-sources
+  - ln -s ansible-role-bitbucket_sources ../bitbucket_sources
 
 script:
   - molecule test
