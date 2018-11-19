@@ -123,4 +123,4 @@
     scope: "{{ item.scope|default('local') }}"
     name: "{{ item.name }}"
     value: "{{ item.value }}"
-  with_list: bitbucket_sources_git_config
+  loop: "{{ bitbucket_sources_git_config }}"
